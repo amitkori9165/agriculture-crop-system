@@ -1,0 +1,100 @@
+package com.admin.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Booking {
+
+	@Positive(message = "Booking id must be positive...!")
+	private int bookingId;
+
+	@NotNull(message = "Farmer ID cannot be left blank...!")
+	private int farmerId;
+
+	@NotNull(message = "Dealer ID cannot be left blank...!")
+	private int dealerId;
+
+	@NotNull(message = "Crop ID cannot be left blank...!")
+	private int cropId;
+
+	private double totalAmount;
+
+	private String paymentStatus;
+
+//	public double getTotalAmount() {
+//		return totalAmount;
+//	}
+//
+//	public void setTotalAmount(double totalAmount) {
+//		this.totalAmount = totalAmount;
+//	}
+//
+//	public int getCropId() {
+//		return cropId;
+//	}
+//
+//	public void setCropId(int cropId) {
+//		this.cropId = cropId;
+//	}
+//
+//	@Column(name = "BOOKING_STATUS")
+//	@NotBlank(message = "Booking status cannot be left blank...!")
+//	private String bookingStatus;
+//
+//	public int getBookingId() {
+//		return bookingId;
+//	}
+//
+//	public void setBookingId(int bookingId) {
+//		this.bookingId = bookingId;
+//	}
+//
+//	public int getFarmerId() {
+//		return farmerId;
+//	}
+//
+//	public void setFarmerId(int farmerId) {
+//		this.farmerId = farmerId;
+//	}
+//
+//	public int getDealerId() {
+//		return dealerId;
+//	}
+//
+//	public void setDealerId(int dealerId) {
+//		this.dealerId = dealerId;
+//	}
+//
+//	public String getBookingStatus() {
+//		return bookingStatus;
+//	}
+//
+//	public void setBookingStatus(String bookingStatus) {
+//		this.bookingStatus = bookingStatus;
+//	}
+//	
+//	public Booking() {
+//		
+//	}
+//
+//	public Booking(@Positive(message = "Booking id must be positive...!") int bookingId, int farmerId, int dealerId,
+//			@NotBlank(message = "Booking status cannot be left blank...!") String bookingStatus, int cropId,double totalAmount) {
+//		super();
+//		this.bookingId = bookingId;
+//		this.farmerId = farmerId;
+//		this.dealerId = dealerId;
+//		this.bookingStatus = bookingStatus;
+//	}
+}

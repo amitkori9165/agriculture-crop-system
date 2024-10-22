@@ -1,0 +1,87 @@
+package com.dealers.service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.dealers.exception.BookingNotFoundException;
+import com.dealers.exception.DealerNotFoundException;
+import com.dealers.model.Dealer;
+import com.dealers.model.DealersBooking;
+import com.dealers.model.DealersCrop;
+import com.dealers.repository.DealerRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class DealersBookingServices {
+
+	@Autowired
+	DealerRepository repo;
+
+	@Autowired
+	DealersCropServices cropService;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	final String ROOT_URI = "http://localhost:8080/bookings";
+	final String ROOT_URI2 = "http://localhost:8080/crops";
+//	final String ROOT_URI3 = "http://localhost:8080/farmers";
+
+	public List<DealersBooking> getBookings(@Valid int dealerId) {
+
+		Optional<Dealer> dealer = repo.findById(dealerId);
+		if (dealer.isEmpty()) {
+			throw new DealerNotFoundException("Dealer with ID: " + dealerId + " not found in database...!");
+		}
+
+		DealersBooking[] totalBookingArr = restTemplate
+				.getForEntity(ROOT_URI + "/showAllBookings", DealersBooking[].class).getBody();
+		List<DealersBooking> totalBookingList = Arrays.asList(totalBookingArr);
+
+		List<DealersBooking> bookingList = totalBookingList.stream().filter(obj1 -> obj1.getDealerId() == dealerId)
+				.toList();
+
+		if (bookingList.isEmpty()) {
+			throw new BookingNotFoundException("No bookings found for provided dealer ID: " + dealerId);
+		}
+		return bookingList;
+	}
+
+	public String addBooking(@Valid DealersBooking booking) {
+//		booking_id | booking_status | crop_id | dealer_id | farmer_id | total_amount
+
+//		restTemplate.getForEntity(ROOT_URI, null)
+
+		System.out.println("my message1");
+		System.out.println(booking.getCropId() + ", " + booking.getFarmerId());
+
+		List<DealersCrop> cropList = cropService.getCrops();
+
+		for (DealersCrop crop : cropList) {
+
+//			System.out.println(crop.getCropId()+", "+crop.getFarmerId());
+
+			if (crop.getFarmerId() == booking.getFarmerId()) {
+				if (crop.getCropId() == booking.getCropId()) {
+					restTemplate.postForLocation(ROOT_URI + "/addBookings", booking);
+
+//				updating the crop status from unsold to booked
+					int cropId = booking.getCropId();
+					crop.setCropStatus("BOOKED");
+
+//				cropService.
+					restTemplate.put(ROOT_URI2 + "/updateCropsById/" + cropId, crop);
+					return "Booking confirm...!" + "Your Booking ID: " + booking.getBookingId();
+				}
+			}
+		}
+
+		throw new RuntimeException("Invalid booking details...!");
+	}
+}

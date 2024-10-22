@@ -1,0 +1,30 @@
+package com.dealers.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.dealers.model.Dealer;
+
+import jakarta.validation.Valid;
+
+public interface DealerServices {
+	
+//	For getting the dealers present in database
+	public List<Dealer> getDealer();
+	
+//	For getting the dealer by id
+	public Optional<Dealer> getDealer(int id);
+	
+//	For adding new dealer to database
+	public String addDealer(@Valid Dealer dealer);
+	
+//	For updating the existing dealer in database
+	public String updateDealer(@Valid int id, @Valid Dealer updatedDealer);
+	
+//	For deleting the specific dealer by id
+	public String deleteDealer(int id);
+	
+//	For deleting all the dealer from the database
+	public String deleteDealer();
+
+}

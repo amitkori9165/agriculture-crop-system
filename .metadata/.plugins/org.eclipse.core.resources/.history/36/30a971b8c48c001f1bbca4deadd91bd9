@@ -1,0 +1,73 @@
+package com.FarmerService.controller;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.FarmerService.models.Crop;
+import com.FarmerService.models.Farmer;
+import com.FarmerService.services.FarmerServicesImpl;
+
+import jakarta.validation.Valid;
+
+@RestController
+@Validated
+public class FarmerController {
+	
+	@Autowired
+	FarmerServicesImpl services;
+	
+	@GetMapping("/farmers")
+	public List<Farmer> getFarmer(){
+		
+		return services.getFarmer();
+	}
+	
+	@GetMapping("/farmers/{id}")
+	public Optional<Farmer> getFarmer(@Valid @PathVariable int id) {
+		
+		return services.getFarmer(id);
+	}
+	
+	@PostMapping("/add")
+	public String addFarmer(@Valid @RequestBody Farmer farmer) {
+		return services.addFarmer(farmer);
+		
+	}
+	
+	@PutMapping("/update/{id}")
+	public String updateFarmer(@Valid @PathVariable int id ,@Valid @RequestBody Farmer updatedFarmer ) {
+		
+//		return services.updateFarmer(id,updatedFarmer);
+		return services.updateFarmer(id, updatedFarmer);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public String deleteFarmer(@Valid @PathVariable int id) {
+		
+		return services.deleteFarmer(id);
+	}
+	
+	@DeleteMapping("/delete")
+	public String deleteFarmer() {
+		return services.deleteFarmer();
+	}
+	
+	
+	@PostMapping("{farmerId}/addCrop")
+	public URI addCrop(@PathVariable int farmerId, @RequestBody Crop crop) {
+		
+		crop.setFarmerId(farmerId);
+		return services.addCrop(crop);
+	}
+}

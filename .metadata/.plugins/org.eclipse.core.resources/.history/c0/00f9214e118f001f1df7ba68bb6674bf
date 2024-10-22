@@ -1,0 +1,18 @@
+package com.admin.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.admin.model.Dealer;
+import com.admin.services.AdminDealerService;
+
+public class AdminDealerController {
+	
+	AdminDealerService ser;
+
+	@GetMapping("/showAllDealers")
+	public List<Dealer> showAllDealers(){
+		return ser.showAllDealers();
+	}
+}

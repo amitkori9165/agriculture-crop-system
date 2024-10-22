@@ -1,0 +1,5 @@
+package com.receipt.controller;
+
+public class ReceiptController {
+
+}

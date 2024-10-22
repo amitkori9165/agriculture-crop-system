@@ -1,0 +1,5 @@
+package com.receipt.services;
+
+public class ReceiptServices {
+
+}

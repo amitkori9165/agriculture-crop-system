@@ -1,0 +1,8 @@
+package com.DealerService.exceptions;
+
+public class DealerCreationException extends RuntimeException{
+	public DealerCreationException(String message) {
+		super(message);
+	}
+
+}

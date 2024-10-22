@@ -1,0 +1,80 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.exception.FarmerAlreadyExistsException;
+import com.admin.exception.FarmerNotFoundException;
+import com.admin.model.Farmer;
+
+@Service
+public class AdminFarmerService {
+	
+	@Autowired
+	RestTemplate rest;
+
+	final String ROOT_URL1 = "http://localhost:8080/farmers";
+
+	public List<Farmer> getFarmer() {
+
+		Farmer[] farmerArr = rest.getForEntity(ROOT_URL1 + "/showAllFarmers", Farmer[].class).getBody();
+		List<Farmer> farmerList = Arrays.asList(farmerArr);
+
+		if (farmerList.isEmpty()) {
+			throw new FarmerNotFoundException("No farmer found in database...!");
+		}
+		return farmerList;
+
+	}
+
+	public Farmer getFarmer(int farmerId) {
+
+		Farmer farmer = rest.getForEntity(ROOT_URL1 + "/showFarmersById/" + farmerId, Farmer.class).getBody();
+		if (farmer == null) {
+			throw new FarmerNotFoundException("Farmer with ID: " + farmerId + " found in database...!");
+		}
+
+		return farmer;
+	}
+//
+//	public String deleteDealer(int dealerId) {
+//		Dealer dealer = rest.getForEntity(ROOT_URL1 + "/showDealersById/" + dealerId, Dealer.class).getBody();
+//		if (dealer == null) {
+//			throw new DealerNotFoundException("Dealers with ID: " + dealerId + " found in database...!");
+//		}
+//		rest.delete(ROOT_URL1 + "/deleteDealersById/" + dealerId);
+//		return "Dealer deleted successfully...!";
+//	}
+//
+	public String addFarmer(Farmer farmer) {
+
+		Farmer[] farmerArr = rest.getForEntity(ROOT_URL1 + "/showAllFarmers", Farmer[].class).getBody();
+		List<Farmer> farmerList = Arrays.asList(farmerArr);
+
+		for (Farmer d : farmerList) {
+			if (d.getFarmerId() == farmer.getFarmerId()) {
+				throw new FarmerAlreadyExistsException(
+						"Farmer with ID: " + farmer.getFarmerId() + " already present in database..!");
+			}
+		}
+		rest.postForEntity(ROOT_URL1 + "/addFarmers", farmer, Farmer.class);
+		return "Farmer added successfully...!";
+	}
+
+	public String updateFarmer(int farmerId, Farmer updatedFarmer) {
+
+		Farmer farmer = rest.getForEntity(ROOT_URL1 + "/showFarmersById/" + farmerId, Farmer.class).getBody();
+		if (farmer == null) {
+			throw new FarmerNotFoundException("Farmer with ID: " + farmerId + " found in database...!");
+		}
+
+		rest.put(ROOT_URL1 + "/updateFarmersById/" + farmerId, updatedFarmer);
+
+		return "Farmer updated successfully...!";
+	}
+
+}

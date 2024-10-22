@@ -1,0 +1,57 @@
+package com.bookingservice;
+
+//package com.bookingservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.bookings.service.BookingServices;
+import com.bookings.controller.BookingController;
+import com.bookings.model.Booking;
+
+public class BookingControllerTestAdd {
+	@InjectMocks
+    private BookingController bookingController;
+	
+	@Mock
+	private BookingServices bookingServices;
+	
+	@BeforeEach
+	void setUp() {
+	    MockitoAnnotations.openMocks(this);
+	}
+	
+	@Test
+    void testAddBooking() {
+        Booking newBooking = new Booking(3, 103, 203, 303,700.00 ,"Paid" );
+        when(bookingServices.addBooking(any(Booking.class))).thenReturn("Booking added successfully!");
+
+        String response = bookingController.addBooking(newBooking);
+
+        assertEquals("Booking added successfully!", response);
+        verify(bookingServices, times(1)).addBooking(newBooking);
+    }
+
+    @Test
+    void testUpdateBooking() {
+        Booking updatedBooking = new Booking(1, 101, 201, 301,600.00 , "Completed");
+        when(bookingServices.updateBooking(eq(1), any(Booking.class))).thenReturn("Booking updated successfully!");
+
+        String response = bookingController.updateBooking(1, updatedBooking);
+
+        assertEquals("Booking updated successfully!", response);
+        verify(bookingServices, times(1)).updateBooking(1, updatedBooking);
+    }
+
+}
+

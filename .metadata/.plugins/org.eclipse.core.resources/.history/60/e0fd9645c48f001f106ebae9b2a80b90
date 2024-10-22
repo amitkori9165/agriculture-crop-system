@@ -1,0 +1,58 @@
+package com.dealertest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.dealers.controller.DealerController;
+import com.dealers.model.Dealer;
+import com.dealers.service.DealerServicesImpl;
+
+public class DealerControllerTestAdd {
+	 @Mock
+	    private DealerServicesImpl services;
+
+	    @InjectMocks
+	    private DealerController dealerController;
+
+	    @BeforeEach
+	    public void setUp() {
+	        MockitoAnnotations.openMocks(this);
+	    }
+	    
+	    @Test
+	    public void testAddDealer() {
+	        // Prepare mock data
+	        Dealer dealer = new Dealer(1, "Dealer One", "1234567890", "dealer1@example.com", "Address One", "Branch One", 1234567890L);
+	        when(services.addDealer(dealer)).thenReturn("Dealer added successfully");
+
+	        // Call the method
+	        String response = dealerController.addDealer(dealer);
+
+	        // Assertions
+	        assertEquals("Dealer added successfully", response);
+	        verify(services, times(1)).addDealer(dealer);
+	    }
+	    @Test
+	    public void testUpdateDealer() {
+	        // Prepare mock data
+	        int dealerId = 1;
+	        Dealer updatedDealer = new Dealer(1, "Updated Dealer", "0987654321", "updated@example.com", "Updated Address", "Updated Branch", 9876543210L);
+	        when(services.updateDealer(dealerId, updatedDealer)).thenReturn("Dealer updated successfully");
+
+	        // Call the method
+	        String response = dealerController.updateDealer(dealerId, updatedDealer);
+
+	        // Assertions
+	        assertEquals("Dealer updated successfully", response);
+	        verify(services, times(1)).updateDealer(dealerId, updatedDealer);
+	    }
+}
+

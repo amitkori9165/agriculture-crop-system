@@ -1,0 +1,5 @@
+package com.CropService.exceptions;
+
+public class CropNotFoundException {
+
+}

@@ -1,0 +1,27 @@
+package com.DealerService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "Dealer_Details")
+public class Dealer {
+	
+	@Id
+	@Column(name = "DEALER_ID")
+	@Positive(message = "ID must be positive")
+	@NotNull(message = "ID cannot be left blank...")
+	private int dealerId;
+	
+	@Column(name = "DEALER_NAME")
+	@NotBlank(message = "Name cannot be left blank...")
+	@Size(min = 2, message = "Name should be more than 2 letters...")
+	private String dealerName;
+
+}

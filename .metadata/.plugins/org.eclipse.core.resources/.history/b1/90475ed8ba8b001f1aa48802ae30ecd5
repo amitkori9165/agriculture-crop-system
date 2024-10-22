@@ -1,0 +1,57 @@
+package com.FarmerService.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.FarmerService.exceptions.FarmerAlreadyExistsException;
+import com.FarmerService.exceptions.FarmerNotFoundException;
+import com.FarmerService.models.Farmer;
+import com.FarmerService.repository.FarmerRepository;
+
+import jakarta.validation.Valid;
+
+public class FarmerServices {
+	
+	@Autowired
+	FarmerRepository repo;
+
+	public List<Farmer> getFarmer() {
+		 
+		return repo.findAll();
+	}
+
+	public Optional<Farmer> getFarmer(int id) {
+		
+		Optional<Farmer> farmer = repo.findById(id);
+		 
+		
+		if(farmer.isEmpty()) {
+			throw new FarmerNotFoundException("Farmer with ID: "+id+" is not present in database...!");
+		}
+		 
+		return farmer;
+	}
+
+	public String addFarmer(@Valid Farmer farmer) {
+		 
+		List<Farmer> farmersList = repo.findAll();
+		
+		for(Farmer temp:farmersList) {
+			if(temp.getFarmerId() == farmer.getFarmerId()) {
+				throw new FarmerAlreadyExistsException("Farmer with ID: "+farmer.getFarmerId()+" is already present in database...!");			
+			}
+		}
+		
+		repo.save(farmer);
+		return "Farmer added successfully...!";
+	}
+
+	public String updateFarmer(@Valid Farmer updatedFarmer) {
+		 
+		 repo.save(updatedFarmer);
+		 return "Farmer updated successfully...!";
+	}
+
+}

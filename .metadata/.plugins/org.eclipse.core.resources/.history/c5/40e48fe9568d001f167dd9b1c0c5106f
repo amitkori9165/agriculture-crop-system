@@ -1,0 +1,9 @@
+package com.crops.exception;
+
+public class CropsNotFoundException extends RuntimeException{
+	
+	public CropsNotFoundException(String message) {
+		super(message);
+	}
+
+}

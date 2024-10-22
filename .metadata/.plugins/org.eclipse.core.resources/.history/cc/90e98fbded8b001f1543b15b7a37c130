@@ -1,0 +1,5 @@
+package com.DealerService.exceptions;
+
+public class DealerAlreadyExistsException {
+
+}

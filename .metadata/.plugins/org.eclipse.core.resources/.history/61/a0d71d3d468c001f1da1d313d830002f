@@ -1,0 +1,26 @@
+package com.CropService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "CROP_DETAILS")
+public class Crop {
+	
+	@Id
+	@Column(name = "CROP_ID")
+	private int cropId;
+	
+	@Column(name = "CROP_NAME")
+	private String cropName;
+	
+	@Column(name = "CROP_QUANTITY")
+	private String cropQuantity;
+	
+	@Column(name = "CROP_PRICE")
+	private double cropPrice;
+	
+
+}

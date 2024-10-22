@@ -1,0 +1,27 @@
+package com.BookingService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "BOOKING_DETAILS")
+public class Booking {
+	
+	@Id
+	@Column(name = "BOOKING_ID")
+	private int bookingId;
+	
+	@Column(name = "FARMER_ID")
+	private int farmerId;
+	
+	@Column(name = "DEALER_ID")
+	private int dealerId;
+	
+	@Column(name = "BOOKING_STATUS")
+	private String bookingStatus;
+	
+	
+
+}

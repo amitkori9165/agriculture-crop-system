@@ -1,0 +1,22 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.model.Dealer;
+
+public class AdminDealerService {
+	
+	RestTemplate rest;
+	
+	final String ROOT_URL1 = "http://localhost:8082/dealers";
+	
+	public List<Dealer> showAllDealers(){
+		ResponseEntity<Dealer[]> response = rest.getForEntity(ROOT_URL1, Dealer[].class);
+		System.out.println(response);
+		return Arrays.asList(response.getBody()); 
+	}
+}

@@ -1,0 +1,7 @@
+package com.DealerService.repository;
+
+import com.DealerService.models.Dealer;
+
+public class DealerRepository extends JpaRepository<Dealer,Integer>{
+
+}

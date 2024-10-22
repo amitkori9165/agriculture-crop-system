@@ -1,0 +1,31 @@
+package com.FarmerService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+
+@Entity
+//@Data
+@Table(name = "Farmer_Details")
+public class Farmer {
+	
+	@Id
+	@Column(name = "FARMER_ID")
+	@Positive(message = "ID must be positive")
+	@NotBlank(message = "ID cannot be left blank...")
+	private int farmerId;
+	
+	@Column(name = "FARMER_NAME")
+	@NotBlank(message = "Name cannot be left blank...")
+	@Size(min = 2, message = "Name should be more than 2 letters...")
+	private String farmerName;
+	
+	@Pattern(regex = "\\d{10}", message = "Phone number must contain 10 digits...")
+	private double farmerPhone;
+
+}

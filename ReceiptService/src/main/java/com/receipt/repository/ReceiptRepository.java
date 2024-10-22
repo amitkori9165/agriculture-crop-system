@@ -1,0 +1,22 @@
+package com.receipt.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.receipt.model.Receipt;
+
+import jakarta.validation.Valid;
+
+public interface ReceiptRepository extends JpaRepository<Receipt,Integer>{
+	
+	@Query(value = "SELECT * FROM receipt_details WHERE farmer_id = ?1", nativeQuery = true)
+	public List<Receipt> getReceiptByFarmerId(@Valid int farmerId);
+	
+	@Query(value = "SELECT * FROM receipt_details WHERE dealer_id = ?1", nativeQuery = true)
+	public List<Receipt> getReceiptByDealerId(@Valid int dealerId);
+	
+	
+
+}

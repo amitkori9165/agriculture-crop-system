@@ -1,0 +1,5 @@
+package com.BookingService.exceptions;
+
+public class BookingNotFoundException {
+
+}

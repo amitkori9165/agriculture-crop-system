@@ -1,0 +1,97 @@
+package com.admin.exception;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+ 
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(DealerNotFoundException.class)
+	public ResponseEntity<String> handleDealerNotFoundException(DealerNotFoundException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DealerAlreadyExistsException.class)
+	public ResponseEntity<String> handleDealerAlreadyExistsException(DealerAlreadyExistsException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(DealerCreationException.class)
+	public ResponseEntity<String> handleDealerCreationException(DealerCreationException ex) {
+//		return a bad request 400 
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	}
+	
+	@ExceptionHandler(CropNotFoundException.class)
+	public ResponseEntity<String> handleCropNotFoundException(CropNotFoundException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BookingNotFoundException.class)
+	public ResponseEntity<String> handleBookingsNotFoundException(BookingNotFoundException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BookingAlreadyExistsException.class)
+	public ResponseEntity<String> handleBookingAlreadyExistsException(BookingAlreadyExistsException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(FarmerNotFoundException.class)
+	public ResponseEntity<String> handleFarmerNotFoundException(FarmerNotFoundException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(FarmerAlreadyExistsException.class)
+	public ResponseEntity<String> handleFarmerAlreadyExistsException(FarmerAlreadyExistsException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(FarmerCreationException.class)
+	public ResponseEntity<String> handleFarmerEmployeeCreationException(FarmerCreationException ex) {
+//		return a bad request 400 
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	}
+	
+	@ExceptionHandler(CropAlreadyExistsException.class)
+	public ResponseEntity<String> handleCropAlreadyExistsException(CropAlreadyExistsException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<String> handleAdminNotFoundException(AdminNotFoundException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(AdminAlreadyLoginException.class)
+	public ResponseEntity<String> handleAdminAlreadyLoginException(AdminAlreadyLoginException ex){
+		return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleGlobalException(Exception ex) {
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}

@@ -1,0 +1,5 @@
+package com.DealerService.repository;
+
+public class DealerRepository {
+
+}

@@ -1,0 +1,57 @@
+package com.cropstest;
+
+//package com.cropservice;
+
+import com.crops.controller.CropController;
+import com.crops.model.Crop;
+import com.crops.service.CropServices;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+
+public class CropServiceControllerTestDelete {
+	
+	@InjectMocks
+    private CropController cropController;
+
+    @Mock
+    private CropServices cropServices;
+    
+    private Crop mockCrop;
+    
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        // Create a mock Crop object with the specified constructor sequence
+        mockCrop = new Crop(1, "Wheat", 100, 250.50, 10, "Pending", null, null);
+    }
+
+	 @Test
+	    void testDeleteCropById() {
+	        when(cropServices.delete(anyInt())).thenReturn("Crop deleted successfully");
+
+	        String result = cropController.delete(1);
+
+	        verify(cropServices, times(1)).delete(1);
+	        assertEquals("Crop deleted successfully", result);
+	    }
+
+	    @Test
+	    void testDeleteAllCrops() {
+	        when(cropServices.delete()).thenReturn("All crops deleted successfully");
+
+	        String result = cropController.delete();
+
+	        verify(cropServices, times(1)).delete();
+	        assertEquals("All crops deleted successfully", result);
+	    }
+	
+}
+

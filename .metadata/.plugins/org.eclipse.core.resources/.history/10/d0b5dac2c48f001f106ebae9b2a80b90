@@ -1,0 +1,49 @@
+package com.farmerstest;
+
+import com.farmers.controller.FarmerController;
+import com.farmers.model.Farmer;
+import com.farmers.service.FarmerServicesImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class FarmerControllerTestAdd {
+	@InjectMocks
+    private FarmerController farmerController;
+
+    @Mock
+    private FarmerServicesImpl services;
+
+    private Farmer farmer;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        farmer = new Farmer(1, "John Doe", "1234567890", "john@example.com", 
+                             "123 Farm Lane", "Farm Bank", 123456789L);
+    }
+    @Test
+    void testAddFarmer() {
+        when(services.addFarmer(farmer)).thenReturn("Farmer added successfully");
+
+        String result = farmerController.addFarmer(farmer);
+        assertEquals("Farmer added successfully", result);
+        verify(services, times(1)).addFarmer(farmer);
+    }
+
+    @Test
+    void testUpdateFarmer() {
+        when(services.updateFarmer(1, farmer)).thenReturn("Farmer updated successfully");
+
+        String result = farmerController.updateFarmer(1, farmer);
+        assertEquals("Farmer updated successfully", result);
+        verify(services, times(1)).updateFarmer(1, farmer);
+    }
+
+}
+

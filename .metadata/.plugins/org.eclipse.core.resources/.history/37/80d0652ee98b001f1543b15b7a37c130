@@ -1,0 +1,10 @@
+package com.DealerService.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Dealer_Details")
+public class Dealer {
+
+}

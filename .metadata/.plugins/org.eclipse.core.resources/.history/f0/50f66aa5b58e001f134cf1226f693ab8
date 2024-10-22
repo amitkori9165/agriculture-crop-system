@@ -1,0 +1,13 @@
+package com.gateway.controller;
+
+//import org.springdoc.core.annotations.GroupedOpenApi;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+    @GroupedOpenApi(group = "api-gateway", paths = {"/farmers/**", "/dealers/**", "/crops/**", "/bookings/**"})
+    public void gatewayApi() {
+        // This can be empty, just to define the group
+    }
+}
+

@@ -1,0 +1,5 @@
+package com.receipt.exceptions;
+
+public class ReceiptNotFoundException {
+
+}

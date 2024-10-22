@@ -1,0 +1,19 @@
+package com.DealerService.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.DealerService.models.Dealer;
+
+import jakarta.validation.Valid;
+
+public interface DealerServices {
+	
+	public List<Dealer> getDealer();
+	public Optional<Dealer> getDealer(int id);
+	public String addDealer(@Valid Dealer dealer);
+	public String updateDealer(@Valid int id, @Valid Dealer updatedDealer);
+	public String deleteDealer(int id);
+	public String deleteDealer();
+
+}

@@ -1,0 +1,49 @@
+package com.bookingservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.bookings.controller.BookingController;
+import com.bookings.service.BookingServices;
+
+public class BookingControllerTestDelete {
+	
+	@InjectMocks
+    private BookingController bookingController;
+	
+	@Mock
+	private BookingServices bookingServices;
+	
+	@BeforeEach
+	void setUp() {
+	    MockitoAnnotations.openMocks(this);
+	}
+	
+	@Test
+    void testDeleteBookingById() {
+        when(bookingServices.deleteBooking(1)).thenReturn("Booking deleted successfully!");
+
+        String response = bookingController.deleteBooking(1);
+
+        assertEquals("Booking deleted successfully!", response);
+        verify(bookingServices, times(1)).deleteBooking(1);
+    }
+
+    @Test
+    void testDeleteAllBookings() {
+        when(bookingServices.deleteBooking()).thenReturn("All bookings deleted successfully!");
+
+        String response = bookingController.deleteBooking();
+
+        assertEquals("All bookings deleted successfully!", response);
+        verify(bookingServices, times(1)).deleteBooking();
+    }
+}

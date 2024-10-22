@@ -1,0 +1,53 @@
+package com.DealerService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "Dealer_Details")
+public class Dealer {
+	
+	@Id
+	@Column(name = "DEALER_ID")
+	@Positive(message = "ID must be positive")
+	@NotNull(message = "ID cannot be left blank...")
+	private int dealerId;
+	
+	@Column(name = "DEALER_NAME")
+	@NotBlank(message = "Name cannot be left blank...")
+	@Size(min = 2, message = "Name should be more than 2 letters...")
+	private String dealerName;
+	
+	@Column(name = "DEALER_PHONE_NUMBER")
+	@Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...")
+	private String dealerNumber;
+	
+	@Column(name = "DEALER_EMAIL")
+	@Pattern(regexp = "^[a-z]{2,}[0-9]{3,}@gmail\\.com$", message = "Please provide valid email")
+	private String dealerEmail;
+	
+	@Column(name = "DEALER_LOCATION")
+	@NotBlank(message = "Address cannot be left blank")
+	private String dealerAddress;
+	
+	@Column(name = "DEALER_BANK_BRANCH")
+	@NotBlank(message = "Branch cannot be left blank")
+	private String dealerBankBranch;
+	
+	@Column(name = "DEALER_ACCOUNT_NUMBER")
+	@NotNull(message = "Account number cannot be left blank...")
+	private long dealerAccountNumber;
+	
+	@Column(name = "DEALER_STATUS")
+	private String farmerStatus;
+	
+//	private List<Crops> crops;
+
+}

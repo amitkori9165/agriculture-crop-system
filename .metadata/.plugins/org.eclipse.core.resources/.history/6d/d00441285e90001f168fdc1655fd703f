@@ -1,0 +1,20 @@
+package com.farmers;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
+
+@SpringBootApplication
+public class FarmerServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(FarmerServiceApplication.class, args);
+		System.out.println("Farmer service running......!");
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+}

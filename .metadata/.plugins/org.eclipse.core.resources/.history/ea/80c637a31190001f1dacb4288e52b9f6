@@ -1,0 +1,105 @@
+package com.dealers.service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.dealers.exception.DealerAlreadyExistsException;
+import com.dealers.exception.DealerNotFoundException;
+import com.dealers.model.Dealer;
+import com.dealers.model.Receipt;
+import com.dealers.repository.DealerRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class DealerServicesImpl implements DealerServices {
+
+	@Autowired
+	DealerRepository repo;
+
+	public List<Dealer> getDealer() {
+
+		List<Dealer> dealerList =  repo.findAll();
+		if(dealerList.isEmpty()) {
+			throw new DealerNotFoundException("No dealer Found in database...!");
+		}
+		return dealerList;
+	}
+
+	public Optional<Dealer> getDealer(int id) {
+
+		Optional<Dealer> dealer = repo.findById(id);
+
+		if (dealer.isEmpty()) {
+			throw new DealerNotFoundException("Dealer with ID: " + id + " is not present in database...!");
+		}
+
+		return dealer;
+	}
+
+	public String addDealer(@Valid Dealer dealer) {
+
+		List<Dealer> dealersList = repo.findAll();
+
+		for (Dealer temp : dealersList) {
+			if (temp.getDealerId() == dealer.getDealerId()) {
+				throw new DealerAlreadyExistsException(
+						"Dealer with ID: " + dealer.getDealerId() + " is already present in database...!");
+			}
+		}
+
+		repo.save(dealer);
+		return "Dealer added successfully...!";
+	}
+
+	public String updateDealer(@Valid int id, @Valid Dealer updatedDealer) {
+
+		Optional<Dealer> dealer = repo.findById(id);
+		if (dealer.isEmpty()) {
+			throw new DealerNotFoundException("Dealer with ID: " + id + " is not present in database...!");
+		}
+
+		repo.save(updatedDealer);
+		return "Dealer updated successfully...!";
+	}
+
+	public String deleteDealer(int id) {
+
+		Optional<Dealer> dealer = repo.findById(id);
+
+		if (dealer.isEmpty()) {
+			throw new DealerNotFoundException("Dealer with ID: " + id + " is not present in database...!");
+		}
+
+		repo.deleteById(id);
+		return "Dealer removed from the database....!";
+
+	}
+
+	public String deleteDealer() {
+
+		repo.deleteAll();
+		return "All Dealers are removed from database...!";
+	}
+	
+	@Autowired 
+	RestTemplate restTemplate;
+	
+	final String ROOT_URI = "http:localhost:8086/receipts";
+
+	public List<Receipt> showReceipts(int dealerId) {
+		
+		Receipt[] receiptArr = restTemplate.getForEntity(ROOT_URI + "/showReceiptsByDealerId/"+dealerId , Receipt[].class).getBody();
+		List<Receipt> receiptList = Arrays.asList(receiptArr);
+		if(receiptList.isEmpty()) {
+//			throw new ReceiptNotFoundException("No receipt found with farmer ID: "+farmerId);
+		}
+		return receiptList;
+ 
+	}
+}

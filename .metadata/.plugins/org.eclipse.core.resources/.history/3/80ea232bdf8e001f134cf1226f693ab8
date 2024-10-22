@@ -1,0 +1,51 @@
+package com.admin.services;
+
+
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.exception.AdminAlreadyLoginException;
+import com.admin.model.Admin;
+import com.admin.model.Crop;
+import com.admin.model.Dealer;
+import com.admin.model.Farmer;
+import com.admin.repo.AdminRepo;
+
+import jakarta.validation.Valid;
+
+@Service
+public class AdminService  {
+	@Autowired //for automatic dependency injection, no need manual bean configuration.
+	AdminRepo repo;
+	
+	public List<Admin> getAdmin() {
+			return repo.findAll();
+	}
+	
+	public Admin addAdmin(@Valid @PathVariable @RequestBody Admin a) {
+		Optional<Admin> admin = repo.findById(a.getId());
+		if(admin!=null)
+			throw new AdminAlreadyLoginException("Admin already login");
+		return repo.save(a);
+		
+	}
+	
+	public String deleteAdmin() {
+		repo.deleteAll();
+		return "Admin deleted successfully";
+		
+	}
+
+	
+	
+	
+}

@@ -1,0 +1,55 @@
+package com.farmerstest;
+
+package com.farmerservice;
+
+import com.farmers.controller.FarmerController;
+import com.farmers.model.Farmer;
+import com.farmers.service.FarmerServicesImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class FarmerControllerTestDelete {
+	@InjectMocks
+    private FarmerController farmerController;
+
+    @Mock
+    private FarmerServicesImpl services;
+
+    private Farmer farmer;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        farmer = new Farmer(1, "John Doe", "1234567890", "john@example.com", 
+                             "123 Farm Lane", "Farm Bank", 123456789L);
+    }
+    @Test
+    void testDeleteFarmer() {
+        when(services.deleteFarmer(1)).thenReturn("Farmer deleted successfully");
+
+        String result = farmerController.deleteFarmer(1);
+        assertEquals("Farmer deleted successfully", result);
+        verify(services, times(1)).deleteFarmer(1);
+    }
+
+    @Test
+    void testDeleteAllFarmers() {
+        when(services.deleteFarmer()).thenReturn("All farmers deleted successfully");
+
+        String result = farmerController.deleteFarmer();
+        assertEquals("All farmers deleted successfully", result);
+        verify(services, times(1)).deleteFarmer();
+    }
+
+}
+

@@ -1,0 +1,9 @@
+package com.FarmerService.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.FarmerService.models.Farmer;
+
+public interface FarmerRepository extends JpaRepository<Farmer,Integer>{
+
+}

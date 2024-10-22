@@ -1,0 +1,134 @@
+package com.admin.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Farmer {
+
+	@Positive(message = "ID must be positive")
+	@NotNull(message = "ID cannot be left blank...")
+	private int farmerId;
+
+	@NotBlank(message = "Name cannot be left blank...")
+	@Size(min = 2, message = "Name should be more than 2 letters...")
+	private String farmerName;
+
+	@Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...")
+	private String farmerPhone;
+
+	@Pattern(regexp = "^[a-z]{2,}[0-9]{3,}@gmail\\.com$", message = "Please provide valid email")
+	private String farmerEmail;
+
+	@NotBlank(message = "Address cannot be left blank")
+	private String farmerAddress;
+
+	@NotBlank(message = "Branch cannot be left blank")
+	private String farmerBankBranch;
+
+	@NotNull(message = "Account number cannot be left blank...")
+	private long farmerAccountNumber;
+
+//	@Column(name = "FARMER_STATUS")
+//	private String farmerStatus;
+
+//	private List<Crops> crops;
+
+//	public int getFarmerId() {
+//		return farmerId;
+//	}
+//
+//	public Farmer(@Positive(message = "ID must be positive") @NotNull(message = "ID cannot be left blank...") int farmerId,
+//		@NotBlank(message = "Name cannot be left blank...") @Size(min = 2, message = "Name should be more than 2 letters...") String farmerName,
+//		@Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...") String farmerPhone,
+//		@Pattern(regexp = "^[a-z]{2,}[0-9]{3,}@gmail\\.com$", message = "Please provide valid email") String farmerEmail,
+//		@NotBlank(message = "Address cannot be left blank") String farmerAddress,
+//		@NotBlank(message = "Branch cannot be left blank") String farmerBankBranch,
+//		@NotNull(message = "Account number cannot be left blank...") long farmerAccountNumber, String farmerStatus) {
+//	super();
+//	this.farmerId = farmerId;
+//	this.farmerName = farmerName;
+//	this.farmerPhone = farmerPhone;
+//	this.farmerEmail = farmerEmail;
+//	this.farmerAddress = farmerAddress;
+//	this.farmerBankBranch = farmerBankBranch;
+//	this.farmerAccountNumber = farmerAccountNumber;
+//	this.farmerStatus = farmerStatus;
+//}
+//
+//	public String getFarmerEmail() {
+//		return farmerEmail;
+//	}
+//
+//	public void setFarmerEmail(String farmerEmail) {
+//		this.farmerEmail = farmerEmail;
+//	}
+//
+//	public String getFarmerBankBranch() {
+//		return farmerBankBranch;
+//	}
+//
+//	public void setFarmerBankBranch(String farmerBankBranch) {
+//		this.farmerBankBranch = farmerBankBranch;
+//	}
+//
+//	public void setFarmerId(int farmerId) {
+//		this.farmerId = farmerId;
+//	}
+//
+//	public String getFarmerName() {
+//		return farmerName;
+//	}
+//
+//	public void setFarmerName(String farmerName) {
+//		this.farmerName = farmerName;
+//	}
+//
+//	public @Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...") String getFarmerPhone() {
+//		return farmerPhone;
+//	}
+//
+//	public void setFarmerPhone(String farmerPhone) {
+//		this.farmerPhone = farmerPhone;
+//	}
+//
+//	public String getFarmerAddress() {
+//		return farmerAddress;
+//	}
+//
+//	public void setFarmerAddress(String farmerAddress) {
+//		this.farmerAddress = farmerAddress;
+//	}
+//
+//	public long getFarmerAccountNumber() {
+//		return farmerAccountNumber;
+//	}
+//
+//	public void setFarmerAccountNumber(long farmerAccountNumber) {
+//		this.farmerAccountNumber = farmerAccountNumber;
+//	}
+//
+//	public String getFarmerStatus() {
+//		return farmerStatus;
+//	}
+//
+//	public void setFarmerStatus(String farmerStatus) {
+//		this.farmerStatus = farmerStatus;
+//	}
+//	
+//	public Farmer() {
+//		
+//	}
+}

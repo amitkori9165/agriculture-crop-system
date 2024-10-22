@@ -1,0 +1,58 @@
+package com.admin.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.admin.model.Crop;
+import com.admin.services.AdminCropService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/admin/crops")
+public class AdminCropController {
+
+    @Autowired
+    private AdminCropService adminCropService;
+
+    @GetMapping("/getAllCrops")
+    public ResponseEntity<List<Crop>> getAllCrops() {
+        List<Crop> crops = adminCropService.showAllCrops();
+        return ResponseEntity.ok(crops);
+    }
+
+    @GetMapping("/getCropByName/{name}")
+    public ResponseEntity<Crop> getCropByName(@PathVariable String name) {
+        Optional<Crop> crop = adminCropService.getCropByName(name);
+        return crop.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/addCrop")
+    public String addCrop(@Valid @RequestBody Crop crop) {
+        return adminCropService.addCrop(crop);
+//        return ResponseEntity.ok(message);
+    }
+
+    @PutMapping("/updateCrop/{name}")
+    public ResponseEntity<String> updateCrop(@PathVariable String name, @Valid @RequestBody Crop updatedCrop) {
+        String message = adminCropService.updateCrop(name, updatedCrop);
+        return ResponseEntity.ok(message);
+    }
+
+    @DeleteMapping("/deleteCrop/{name}")
+    public ResponseEntity<String> deleteCrop(@PathVariable String name) {
+        String message = adminCropService.deleteCrop(name);
+        return ResponseEntity.ok(message);
+    }
+
+    @DeleteMapping("/deleteAllCrops")
+    public ResponseEntity<String> deleteAllCrops() {
+        String message = adminCropService.deleteAllCrops();
+        return ResponseEntity.ok(message);
+    }
+}

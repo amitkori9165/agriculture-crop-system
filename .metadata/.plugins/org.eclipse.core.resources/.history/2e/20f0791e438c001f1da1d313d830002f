@@ -1,0 +1,5 @@
+package com.CropService.repository;
+
+public interface CropRepository {
+
+}

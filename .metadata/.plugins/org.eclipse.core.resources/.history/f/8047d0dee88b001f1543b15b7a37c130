@@ -1,0 +1,9 @@
+package com.DealerService.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.DealerService.models.Dealer;
+
+public class DealerRepository extends JpaRepository<Dealer,Integer>{
+
+}

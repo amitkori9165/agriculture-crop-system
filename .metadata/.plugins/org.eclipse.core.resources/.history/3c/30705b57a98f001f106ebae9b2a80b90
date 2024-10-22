@@ -1,0 +1,80 @@
+package com.cropstest;
+
+
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.crops.controller.CropController;
+import com.crops.model.Crop;
+import com.crops.service.CropServices;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CropServiceControllerTestGet {
+	
+
+
+	public class CropControllerTest {
+
+	    @InjectMocks
+	    private CropController cropController;
+
+	    @Mock
+	    private CropServices cropServices;
+
+	    private MockMvc mockMvc;
+
+	    @BeforeEach
+	    public void setUp() {
+	        MockitoAnnotations.openMocks(this);
+	        mockMvc = MockMvcBuilders.standaloneSetup(cropController).build();
+	    }
+
+	    @Test
+	    public void testGetCrops() throws Exception {
+	        List<Crop> crops = new ArrayList<>();
+	        crops.add(new Crop(1, "Wheat", 50, 100.0, 1, "Available", 2, 3));
+	        crops.add(new Crop(2, "Rice", 30, 80.0, 2, "Available", 2, 4));
+
+	        when(cropServices.getCrops()).thenReturn(crops);
+
+	        mockMvc.perform(get("/crops/showAllCrops"))
+	                .andExpect(status().isOk())
+	                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	                .andExpect(jsonPath("$[0].crop_name").value("Wheat"))
+	                .andExpect(jsonPath("$[0].crop_price").value(100.0))
+	                .andExpect(jsonPath("$[0].crop_quantity").value(50))
+	                .andExpect(jsonPath("$[0].crop_status").value("Available"))
+	                .andExpect(jsonPath("$[0].bookedby_dealer_id").value(2))
+	                .andExpect(jsonPath("$[0].farmer_id").value(3));
+
+	        verify(cropServices, times(1)).getCrops();
+	    }
+
+	    @Test
+	    public void testGetCropsById() throws Exception {
+	        Crop crop = new Crop(1, "Wheat", 50, 100.0, 1, "Available", 2, 3);
+	        
+	        when(cropServices.getCrops(1)).thenReturn(crop);
+
+	        mockMvc.perform(get("/crops/showCropsById/1"))
+	                .andExpect(status().isOk())
+	                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	                .andExpect(jsonPath("$.name").value("Wheat"));
+
+	        verify(cropServices, times(1)).getCrops(1);
+	    }
+	}
+
+
+}

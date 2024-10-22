@@ -1,0 +1,48 @@
+package com.dealertest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.dealers.controller.DealerController;
+import com.dealers.service.DealerServicesImpl;
+
+public class DealerControllerTestDelete {
+	@Mock
+    private DealerServicesImpl services;
+
+    @InjectMocks
+    private DealerController dealerController;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+    @Test
+    public void testDeleteDealerById() {
+        int dealerId = 1;
+        when(services.deleteDealer(dealerId)).thenReturn("Dealer deleted successfully");
+
+        String response = dealerController.deleteDealer(dealerId);
+
+        assertEquals("Dealer deleted successfully", response);
+        verify(services, times(1)).deleteDealer(dealerId);
+    }
+    @Test
+    public void testDeleteAllDealers() {
+        when(services.deleteDealer()).thenReturn("All dealers deleted successfully");
+
+        String response = dealerController.deleteDealer();
+
+        assertEquals("All dealers deleted successfully", response);
+        verify(services, times(1)).deleteDealer();
+    }
+}
+

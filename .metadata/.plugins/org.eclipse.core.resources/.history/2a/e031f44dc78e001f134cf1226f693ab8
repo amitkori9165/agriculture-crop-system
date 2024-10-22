@@ -1,0 +1,5 @@
+package com.bookings.model;
+
+public class CustomIdBookingGenerator {
+
+}

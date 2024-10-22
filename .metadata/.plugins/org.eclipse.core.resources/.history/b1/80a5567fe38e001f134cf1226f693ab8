@@ -1,0 +1,81 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.model.Crop;
+
+import com.admin.exception.CropAlreadyExistsException;
+import com.admin.exception.CropNotFoundException;
+
+import jakarta.validation.Valid;
+
+@Service
+public class AdminCropService {
+    
+    @Autowired 
+    RestTemplate rest;
+    final String ROOT_URL1 = "http://localhost:8083/crops";
+    final String ROOT_URL2 = "http://localhost:8083/crops/{name}";
+    final String ROOT_URL3 = "http://localhost:8083/add";
+    final String ROOT_URL4 = "http://localhost:8083/update/{name}";
+    final String ROOT_URL5 = "http://localhost:8083/delete/{name}";
+    final String ROOT_URL6 = "http://localhost:8083/delete";
+    
+    public List<Crop> showAllCrops() {
+        ResponseEntity<Crop[]> response = rest.getForEntity(ROOT_URL1, Crop[].class);
+        return Arrays.asList(response.getBody());
+    }
+
+    public Optional<Crop> getCropByName(String cropName) {
+        Crop crop = rest.getForObject(ROOT_URL2, Crop.class, cropName);
+        if (crop != null) {
+            return Optional.of(crop);
+        } else {
+            throw new CropNotFoundException("Crop: " + cropName + " not found in database...!");
+        }
+    }
+    
+    public String addCrop(@Valid @RequestBody Crop crop) {
+        List<Crop> crops = showAllCrops();
+        for (Crop c : crops) {
+            if (c.getCropId() == crop.getCropId()) {
+                throw new CropAlreadyExistsException("Crop with ID: " + crop.getCropId() + " already present in database...!");
+            }
+        }
+        rest.postForEntity(ROOT_URL3, crop, Crop.class);
+        return "Crop added successfully...!";
+    }
+
+    public String updateCrop(String cropName, @Valid Crop updatedCrop) {
+        Optional<Crop> existingCrop = getCropByName(cropName);
+        if (existingCrop.isPresent()) {
+            rest.put(ROOT_URL4, updatedCrop, cropName);
+            return "Crop updated successfully...!";
+        } else {
+            throw new CropNotFoundException("Crop: " + cropName + " not found in database...!");
+        }
+    }
+
+    public String deleteCrop(String cropName) {
+        Optional<Crop> existingCrop = getCropByName(cropName);
+        if (existingCrop.isPresent()) {
+            rest.delete(ROOT_URL5, cropName);
+            return "Crop deleted successfully...!";
+        } else {
+            throw new CropNotFoundException("Crop: " + cropName + " not found in database...!");
+        }
+    }
+
+    public String deleteAllCrops() {
+        rest.delete(ROOT_URL6);
+        return "All crops removed from database...!";
+    }
+}

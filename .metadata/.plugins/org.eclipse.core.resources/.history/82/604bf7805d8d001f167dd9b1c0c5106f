@@ -1,0 +1,19 @@
+package com.crops.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.crops.model.Crop;
+
+import jakarta.validation.Valid;
+
+@Repository
+public interface CropRepository extends JpaRepository<Crop,Integer>{
+	
+	@Query(value = "SELECT * FROM crop_details WHERE crop_name = ?1", nativeQuery = true)
+	public Optional<Crop> getCropByName(@Valid String name);
+
+}

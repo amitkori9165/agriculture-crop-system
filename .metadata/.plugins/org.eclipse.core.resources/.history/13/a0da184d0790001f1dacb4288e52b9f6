@@ -1,0 +1,44 @@
+package com.receipt.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.receipt.model.Receipt;
+import com.receipt.repository.ReceiptRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class ReceiptServices {
+	
+	@Autowired
+	ReceiptRepository repo;
+
+	public List<Receipt> getReceipt() {
+		
+		List<Receipt> ReceiptList = repo.findAll();
+		if(ReceiptList.isEmpty()) {
+//			throw new ReceiptNotFoundException("No Receipts found in database...!");
+		}
+		return ReceiptList; 
+	}
+
+	public Optional<Receipt> getReceipt(@Valid int receiptId) {
+		 
+		Optional<Receipt> receipt = repo.findById(receiptId);
+
+		if (receipt.isEmpty()) {
+//			throw new ReceiptNotFoundException("Receipt with ID: " + id + " is not present in database...!");
+		}
+
+		return receipt;
+	}
+
+	public String generateReceipt(@Valid Receipt receipt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

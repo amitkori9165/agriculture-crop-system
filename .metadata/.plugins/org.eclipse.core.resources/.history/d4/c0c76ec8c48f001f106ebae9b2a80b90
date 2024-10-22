@@ -1,0 +1,59 @@
+package com.farmerstest;
+
+import com.farmers.controller.FarmerController;
+import com.farmers.model.Farmer;
+import com.farmers.service.FarmerServicesImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+public class FarmerControllerTestGet {
+	
+	@InjectMocks
+    private FarmerController farmerController;
+
+    @Mock
+    private FarmerServicesImpl services;
+
+    private Farmer farmer;
+    
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        farmer = new Farmer(1, "John Doe", "1234567890", "john@example.com", 
+                             "123 Farm Lane", "Farm Bank", 123456789L);
+    }
+    @Test
+    void testGetAllFarmers() {
+        List<Farmer> farmers = new ArrayList<>();
+        farmers.add(farmer);
+
+        when(services.getFarmer()).thenReturn(farmers);
+
+        List<Farmer> result = farmerController.getFarmer();
+        assertEquals(1, result.size());
+        assertEquals(farmer, result.get(0));
+        verify(services, times(1)).getFarmer();
+    }
+    
+    @Test
+    void testGetFarmerById() {
+        when(services.getFarmer(1)).thenReturn(Optional.of(farmer));
+
+        Optional<Farmer> result = farmerController.getFarmer(1);
+        assertTrue(result.isPresent());
+        assertEquals(farmer, result.get());
+        verify(services, times(1)).getFarmer(1);
+    }
+
+}
+

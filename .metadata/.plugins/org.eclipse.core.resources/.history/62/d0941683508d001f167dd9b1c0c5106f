@@ -1,0 +1,8 @@
+package com.DealerService.exceptions;
+
+public class DealerAlreadyExistsException extends RuntimeException {
+	public DealerAlreadyExistsException(String message) {
+		super(message);
+	}
+
+}

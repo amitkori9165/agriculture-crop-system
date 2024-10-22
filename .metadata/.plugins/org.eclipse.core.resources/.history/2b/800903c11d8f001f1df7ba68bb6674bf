@@ -1,0 +1,18 @@
+package com.admin.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.admin.model.Farmer;
+import com.admin.services.AdminFarmerService;
+
+public class AdminFarmerController {
+
+	AdminFarmerService ser;
+	
+	@GetMapping("/showAllFarmers")
+	public List<Farmer> showAllFarmers(){
+		return ser.showAllFarmers();
+	}
+}

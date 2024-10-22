@@ -1,0 +1,20 @@
+package com.FarmerService.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+
+@Entity
+//@Data
+@Table(name = "Farmer_Details")
+public class Farmer {
+	
+	@Id
+	@Positive(message = "ID must be positive")
+	@NotBlank(message = "ID cannot be left blank...")
+	private int farmerId;
+
+}

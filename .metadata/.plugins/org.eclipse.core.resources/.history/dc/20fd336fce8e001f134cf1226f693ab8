@@ -1,0 +1,20 @@
+package com.admin.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.model.Booking;
+
+public class AdminBookingService {
+	
+	@Autowired
+	RestTemplate restTemplate;
+
+	public List<Booking> getBookings() {
+ 
+		return null;
+	}
+
+}

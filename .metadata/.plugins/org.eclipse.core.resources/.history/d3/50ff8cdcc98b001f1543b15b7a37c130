@@ -1,0 +1,111 @@
+package com.FarmerService.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+
+@Entity
+//@Data
+@Table(name = "Farmer_Details")
+public class Farmer {
+	
+	@Id
+	@Column(name = "FARMER_ID")
+	@Positive(message = "ID must be positive")
+	@NotNull(message = "ID cannot be left blank...")
+	private int farmerId;
+	
+	@Column(name = "FARMER_NAME")
+	@NotBlank(message = "Name cannot be left blank...")
+	@Size(min = 2, message = "Name should be more than 2 letters...")
+	private String farmerName;
+	
+	@Column(name = "FARMER_NUMBER")
+	@Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...")
+	private String farmerPhone;
+	
+	@Column(name = "FARMER_ADDRESS")
+	private String farmerAddress;
+	
+	@Column(name = "FARMER_ACCOUNT_NUMBER")
+	@NotNull(message = "Account number cannot be left blank...")
+	private long farmerAccountNumber;
+	
+	@Column(name = "FARMER_STATUS")
+	private String farmerStatus;
+
+	public int getFarmerId() {
+		return farmerId;
+	}
+
+	public void setFarmerId(int farmerId) {
+		this.farmerId = farmerId;
+	}
+
+	public String getFarmerName() {
+		return farmerName;
+	}
+
+	public void setFarmerName(String farmerName) {
+		this.farmerName = farmerName;
+	}
+
+	public long getFarmerPhone() {
+		return farmerPhone;
+	}
+
+	public void setFarmerPhone(String farmerPhone) {
+		this.farmerPhone = farmerPhone;
+	}
+
+	public String getFarmerAddress() {
+		return farmerAddress;
+	}
+
+	public void setFarmerAddress(String farmerAddress) {
+		this.farmerAddress = farmerAddress;
+	}
+
+	public long getFarmerAccountNumber() {
+		return farmerAccountNumber;
+	}
+
+	public void setFarmerAccountNumber(long farmerAccountNumber) {
+		this.farmerAccountNumber = farmerAccountNumber;
+	}
+
+	public String getFarmerStatus() {
+		return farmerStatus;
+	}
+
+	public void setFarmerStatus(String farmerStatus) {
+		this.farmerStatus = farmerStatus;
+	}
+
+	public Farmer(
+			@Positive(message = "ID must be positive") @NotBlank(message = "ID cannot be left blank...") int farmerId,
+			@NotBlank(message = "Name cannot be left blank...") @Size(min = 2, message = "Name should be more than 2 letters...") String farmerName,
+			@Pattern(regexp = "\\d{10}", message = "Phone number must contain 10 digits...") long farmerPhone,
+			String farmerAddress,
+			@NotBlank(message = "Account number cannot be left blank...") long farmerAccountNumber,
+			String farmerStatus) {
+		super();
+		this.farmerId = farmerId;
+		this.farmerName = farmerName;
+		this.farmerPhone = farmerPhone;
+		this.farmerAddress = farmerAddress;
+		this.farmerAccountNumber = farmerAccountNumber;
+		this.farmerStatus = farmerStatus;
+	}
+	
+	public Farmer() {
+		
+	}
+}

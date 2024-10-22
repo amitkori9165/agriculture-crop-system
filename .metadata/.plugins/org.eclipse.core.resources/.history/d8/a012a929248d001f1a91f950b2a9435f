@@ -1,0 +1,22 @@
+spring.application.name=ApiGateway
+
+server.port=8080
+
+# Spring Cloud Gateway routes
+spring.cloud.gateway.routes[0].id=FarmerService
+spring.cloud.gateway.routes[0].uri=http://localhost:8081
+spring.cloud.gateway.routes[0].predicates[0]=Path=/farmer/**
+ 
+spring.cloud.gateway.routes[1].id=DealerService
+spring.cloud.gateway.routes[1].uri=http://localhost:8082
+spring.cloud.gateway.routes[1].predicates[0]=Path=/dealer/*
+
+spring.cloud.gateway.routes[0].id=FarmerService
+spring.cloud.gateway.routes[0].uri=http://localhost:8081
+spring.cloud.gateway.routes[0].predicates[0]=Path=/farmer/**
+ 
+spring.cloud.gateway.routes[1].id=DealerService
+spring.cloud.gateway.routes[1].uri=http://localhost:8082
+spring.cloud.gateway.routes[1].predicates[0]=Path=/dealer/*
+
+

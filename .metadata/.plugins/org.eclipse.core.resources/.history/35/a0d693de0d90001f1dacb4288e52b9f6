@@ -1,0 +1,90 @@
+package com.farmers.service;
+
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.farmers.exception.FarmerAlreadyExistsException;
+import com.farmers.exception.FarmerNotFoundException;
+import com.farmers.model.FarmersCrop;
+import com.farmers.model.Farmer;
+import com.farmers.repository.FarmerRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class FarmerServicesImpl implements FarmerServices{
+
+	@Autowired
+	FarmerRepository repo;
+
+	public List<Farmer> getFarmer() {
+        
+		List<Farmer> farmerList = repo.findAll();
+		if(farmerList.isEmpty()) {
+			throw new FarmerNotFoundException("No farmers found in database...!");
+		}
+		return farmerList;
+	}
+
+	public Optional<Farmer> getFarmer(int id) {
+
+		Optional<Farmer> farmer = repo.findById(id);
+
+		if (farmer.isEmpty()) {
+			throw new FarmerNotFoundException("Farmer with ID: " + id + " is not present in database...!");
+		}
+
+		return farmer;
+	}
+
+	public String addFarmer(@Valid Farmer farmer) {
+
+		List<Farmer> farmersList = repo.findAll();
+
+		for (Farmer temp : farmersList) {
+			if (temp.getFarmerId() == farmer.getFarmerId()) {
+				throw new FarmerAlreadyExistsException(
+						"Farmer with ID: " + farmer.getFarmerId() + " is already present in database...!");
+			}
+		}
+
+		repo.save(farmer);
+		return "Farmer added successfully...!";
+	}
+
+	public String updateFarmer(@Valid int id, @Valid Farmer updatedFarmer) {
+
+		Optional<Farmer> farmer = repo.findById(id);
+		if (farmer.isEmpty()) {
+			throw new FarmerNotFoundException("Farmer with ID: " + id + " is not present in database...!");
+		}
+
+		repo.save(updatedFarmer);
+		return "Farmer updated successfully...!";
+	}
+
+	public String deleteFarmer(int id) {
+
+		Optional<Farmer> farmer = repo.findById(id);
+
+		if (farmer.isEmpty()) {
+			throw new FarmerNotFoundException("Farmer with ID: " + id + " is not present in database...!");
+		}
+
+		repo.deleteById(id);
+		return "Farmer removed from the database....!";
+	}
+
+	public String deleteFarmer() {
+
+		repo.deleteAll();
+		return "All farmers are removed from database...!";
+	}
+}

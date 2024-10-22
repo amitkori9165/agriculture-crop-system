@@ -1,0 +1,36 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.exception.DealerNotFoundException;
+import com.admin.model.Dealer;
+
+@Service
+public class AdminDealerService {
+	
+	@Autowired
+	RestTemplate rest;
+	
+	final String ROOT_URL1 = "http://localhost:8080/dealers";
+	
+	public List<Dealer> showAllDealers(){
+//		ResponseEntity<Dealer[]> response = rest.getForEntity(ROOT_URL1, Dealer[].class);
+//		System.out.println(response);
+//		return Arrays.asList(response.getBody()); 
+		
+		Dealer[] dealerArr = rest.getForEntity(ROOT_URL1 +"/showAllDealers", Dealer[].class).getBody();
+		List<Dealer> dealerList = Arrays.asList(dealerArr);
+		
+		if(dealerList.isEmpty()) {
+			throw new DealerNotFoundException("No dealers found in database...!");
+		}
+		return dealerList;
+		
+		
+	}
+}

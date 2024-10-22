@@ -1,0 +1,74 @@
+package com.dealertest;
+
+import com.dealers.controller.DealerController;
+import com.dealers.model.Dealer;
+import com.dealers.service.DealerServicesImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+
+public class DealerControllerTestGet {
+	 @Mock
+	    private DealerServicesImpl services;
+
+	    @InjectMocks
+	    private DealerController dealerController;
+
+	    @BeforeEach
+	    public void setUp() {
+	        MockitoAnnotations.openMocks(this);
+	    }
+
+	    @Test
+	    public void testGetAllDealers() {
+	        // Prepare mock data
+	        Dealer dealer1 = new Dealer(1, "Dealer One", "1234567890", "dealer1@example.com", "Address One", "Branch One", 1234567890L);
+	        Dealer dealer2 = new Dealer(2, "Dealer Two", "0987654321", "dealer2@example.com", "Address Two", "Branch Two", 9876543210L);
+	        
+	        when(services.getDealer()).thenReturn(Arrays.asList(dealer1, dealer2));
+
+	        // Call the method
+	        var dealers = dealerController.getDealer();
+
+	        // Assertions
+	        assertEquals(2, dealers.size());
+	        assertEquals("Dealer One", dealers.get(0).getDealerName());
+	        assertEquals("Dealer Two", dealers.get(1).getDealerName());
+	    }
+
+	    @Test
+	    public void testGetDealerById() {
+	        // Prepare mock data
+	        Dealer dealer = new Dealer(1, "Dealer One", "1234567890", "dealer1@example.com", "Address One", "Branch One", 1234567890L);
+	        when(services.getDealer(1)).thenReturn(Optional.of(dealer));
+
+	        // Call the method
+	        Optional<Dealer> result = dealerController.getDealer(1);
+
+	        // Assertions
+	        assertEquals("Dealer One", result.get().getDealerName());
+	    }
+
+	    @Test
+	    public void testGetDealerById_NotFound() {
+	        // Mocking service to return empty for non-existing dealer
+	        when(services.getDealer(anyInt())).thenReturn(Optional.empty());
+
+	        // Call the method
+	        Optional<Dealer> result = dealerController.getDealer(99);
+
+	        // Assertions
+	        assertEquals(Optional.empty(), result);
+	    }
+
+}
+

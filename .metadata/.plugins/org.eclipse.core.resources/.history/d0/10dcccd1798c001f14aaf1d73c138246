@@ -1,0 +1,5 @@
+package com.BookingService.controller;
+
+public class BookingController {
+
+}

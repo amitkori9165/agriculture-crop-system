@@ -1,0 +1,134 @@
+package com.crops.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.crops.exception.CropAlreadyExistsException;
+import com.crops.exception.CropNotFoundException;
+import com.crops.model.Crop;
+import com.crops.repository.CropRepository;
+
+import jakarta.validation.Valid;
+
+@Service
+public class CropServices {
+
+	@Autowired
+	CropRepository repo;
+
+	public List<Crop> getCrops() {
+		
+		 List<Crop> cropList = repo.findAll();
+		 if(cropList.isEmpty()) {
+			 throw new CropNotFoundException("No crops found in database...!");
+		 }
+		 return cropList;
+	}
+
+	public List<Crop> getCrops(@Valid String name) {
+		
+		List<Crop> crop = repo.getCropByName(name);
+		
+		if(crop.isEmpty()) {
+			throw new CropNotFoundException("Crop : " + name + " not found in database...!");
+		}
+		return crop;
+	}
+	
+	public List<Crop> getCropsByQuantity(@Valid int quantity){
+		
+		List<Crop> cropsList = repo.getCropsByQuantity(quantity);
+		if(cropsList.isEmpty()) {
+			throw new CropNotFoundException("Crops not found is specified quantity...!");
+		}
+		return cropsList;
+	}
+	
+
+	public String addCrop(@Valid Crop crop) {
+
+		List<Crop> cropList = repo.findAll();
+
+		for (Crop c : cropList) {
+			if (c.getCropId() == crop.getCropId()) {
+				throw new CropAlreadyExistsException(
+						"Crop with ID: " + crop.getCropId() + " already present is database...!");
+			}
+		}
+		repo.save(crop);
+		return "Crop added successfully...!";
+
+	}
+
+	public String updateCrop(@Valid String name, @Valid Crop updatedCrop) {
+		 
+		List<Crop> cropList = repo.findAll();
+		for(Crop c:cropList) {
+			if(c.getCropName().equalsIgnoreCase(name)) {
+				repo.save(updatedCrop);
+				return "Crop updated successfully...!";
+			}
+		}
+		throw new CropNotFoundException("Crop : " + name + " not found in database...!");
+	}
+
+	public String delete(@Valid String name) {
+		
+//		List<Crop> cropList = repo.findAll();
+//		for(Crop c:cropList) {
+//			if(c.getCropName().equalsIgnoreCase(name)) {
+//				 repo.deleteById(c.getCropId());
+//				 return "Crop deleted successfully...!";
+//			}
+//		}
+//		
+//		throw new CropNotFoundException("Crop : " + name + " not found in database...!");
+		List<Crop> crop = repo.getCropByName(name);
+		if(crop.isEmpty()) {
+			throw new CropNotFoundException("Crop : " + name + " not found in database...!");
+		}
+		repo.deleteCropByName(name);
+		return "Crop deleted successfully...!";
+	}
+
+	public String delete() {	 
+		 repo.deleteAll();
+		 return "All crops removed from database...!";
+	}
+
+	public Crop getCrops(@Valid int id) {
+		 
+		Optional<Crop> crop = repo.findById(id);
+		if(crop.isEmpty()) {
+			throw new CropNotFoundException("Crop with ID: "+id+" not found in database...!");
+		}
+		return null;
+	}
+
+	public String updateCrop(@Valid int id, @Valid Crop updatedCrop) {
+		 
+		Optional<Crop> crop = repo.findById(id);
+		if(crop.isEmpty()) {
+			throw new CropNotFoundException("Crop with ID: "+id+" not found in database...!");
+		}
+		repo.save(updatedCrop);
+		return "Crop updated successfully...!";
+	}
+
+	public String delete(@Valid int id) {	
+		Optional<Crop> crop = repo.findById(id);
+		if(crop.isEmpty()) {
+			throw new CropNotFoundException("Crop with ID: "+id+" not found in database...!");
+		}
+		repo.deleteById(id);
+		return "Crop deleted successfully...!";
+	}
+
+	public Crop getCropsByBookingId(@Valid int bookingId) {
+		 
+		 
+	}
+}

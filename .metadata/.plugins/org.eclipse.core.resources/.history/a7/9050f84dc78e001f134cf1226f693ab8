@@ -1,0 +1,16 @@
+package com.bookings.model;
+
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+
+import java.io.Serializable;
+
+public class CustomBookingIdGenerator implements IdentifierGenerator {
+    private static long nextId = 400; // Start from 401, so 400 + 1 will be 401
+
+    @Override
+    public Serializable generate(SharedSessionContractImplementor session, Object obj) {
+        return ++nextId; // Increment the ID for each new booking
+    }
+}
+

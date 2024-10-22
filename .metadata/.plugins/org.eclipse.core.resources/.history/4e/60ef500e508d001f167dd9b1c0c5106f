@@ -1,0 +1,9 @@
+package com.CropService.exceptions;
+
+public class CropAlreadyExistsException extends RuntimeException{
+	
+	public CropAlreadyExistsException(String message) {
+		super(message);
+	}
+
+}

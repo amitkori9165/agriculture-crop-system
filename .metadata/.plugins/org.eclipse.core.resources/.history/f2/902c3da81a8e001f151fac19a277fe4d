@@ -1,0 +1,53 @@
+package com.dealers.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.crops.model.Crop;
+import com.dealers.model.DealersCrop;
+
+import jakarta.validation.Valid;
+
+@Service
+public class DealersCropServices {
+	
+	@Autowired
+	DealerServicesImpl services;
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	public List<DealersCrop> getCrops() {
+		
+//		 List<Crop> cropList = repo.findAll();
+//		 if(cropList.isEmpty()) {
+//			 throw new CropNotFoundException("No crops found in database...!");
+//		 }
+//		 return cropList;
+		return null;
+	}
+
+	public Optional<DealersCrop> getCrops(@Valid String name) {
+		
+//		Optional<Crop> crop = repo.getCropByName(name);
+//		if(crop.isEmpty()) {
+//			throw new CropNotFoundException("Crop : " + name + " not found in database...!");
+//		}
+//		return crop;
+		return null;
+	}
+	
+	public List<DealersCrop> getCropsByQuantity(@Valid int quantity){
+		
+//		List<Crop> cropsList = repo.getCropsByQuantity(quantity);
+//		if(cropsList.isEmpty()) {
+//			throw new CropNotFoundException("Crops not found is specified quantity...!");
+//		}
+//		return cropsList;
+		
+	}
+}

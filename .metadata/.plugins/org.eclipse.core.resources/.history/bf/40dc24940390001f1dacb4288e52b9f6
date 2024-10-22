@@ -1,0 +1,5 @@
+package com.receipt.model;
+
+public class Receipt {
+
+}

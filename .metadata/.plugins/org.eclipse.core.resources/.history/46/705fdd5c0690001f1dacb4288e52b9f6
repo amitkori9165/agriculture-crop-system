@@ -1,0 +1,38 @@
+package com.receipt.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.farmers.exception.FarmerNotFoundException;
+import com.farmers.model.Farmer;
+import com.receipt.model.Receipt;
+
+import jakarta.validation.Valid;
+
+@Service
+public class ReceiptServices {
+
+	public List<Receipt> getReceipt() {
+		
+		List<Farmer> farmerList = repo.findAll();
+		if(farmerList.isEmpty()) {
+			throw new FarmerNotFoundException("No farmers found in database...!");
+		}
+		return farmerList; 
+		
+		return null;
+	}
+
+	public Optional<Receipt> getReceipt(@Valid int receiptId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String generateReceipt(@Valid Receipt receipt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

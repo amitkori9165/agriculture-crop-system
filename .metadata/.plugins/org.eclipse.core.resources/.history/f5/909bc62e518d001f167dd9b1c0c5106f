@@ -1,0 +1,8 @@
+package com.FarmerService.exceptions;
+
+public class FarmerCreationException extends RuntimeException{
+	public FarmerCreationException(String message) {
+		super(message);
+	}
+
+}

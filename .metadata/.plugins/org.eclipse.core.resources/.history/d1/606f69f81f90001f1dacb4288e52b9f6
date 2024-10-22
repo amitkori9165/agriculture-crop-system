@@ -1,0 +1,132 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.exception.BookingNotFoundException;
+import com.admin.exception.CropNotFoundException;
+import com.admin.model.Booking;
+import com.admin.model.Crop;
+import com.admin.model.Dealer;
+import com.admin.model.Farmer;
+import com.admin.model.Receipt;
+
+@Service
+public class AdminBookingService {
+
+	@Autowired
+	RestTemplate restTemplate;
+	
+    private static int receiptId = 501;
+
+	final String ROOT_URI = "http://localhost:8080/bookings";
+	final String ROOT_URI2 = "http://localhost:8080/crops";
+	final String ROOT_URI3 = "http://localhost:8080/receipts";
+	final String ROOT_URI4 = "http://localhost:8080/farmers";
+	final String ROOT_URI5 = "http://localhost:8080/dealers";
+
+	public List<Booking> getBookings() {
+
+		Booking[] bookingArr = restTemplate.getForEntity(ROOT_URI + "/showAllBookings", Booking[].class).getBody();
+
+		List<Booking> bookingList = Arrays.asList(bookingArr);
+		if (bookingList.isEmpty()) {
+			throw new BookingNotFoundException("No bookings found in database...!");
+		}
+
+		return bookingList;
+	}
+
+	public String updateBooking(int bookingId) {
+
+		Booking booking = restTemplate.getForEntity(ROOT_URI + "/showBookingsById/" + bookingId, Booking.class)
+				.getBody();
+
+		if (booking == null) {
+			throw new BookingNotFoundException("Booking ID: " + bookingId + " not found in database...!");
+		}
+
+ 
+		Crop crop = restTemplate.getForEntity(ROOT_URI2 + "/showCropsByBookingId/" + bookingId, Crop.class).getBody();
+		if (crop == null) {
+			throw new CropNotFoundException("Crop with booking ID:" + bookingId + " not found in database...!");
+		}
+
+		crop.setCropStatus("SOLD");
+		restTemplate.put(ROOT_URI2 + "/updateCropsById/" + crop.getCropId(), crop);
+
+		booking.setPaymentStatus("Approved");
+		restTemplate.put(ROOT_URI + "/updateBookings/" + bookingId, booking);
+
+		// Code for generating the receipt usign receipt-service Generate receipt
+//		Receipt receipt = new Receipt();
+//		receipt.set
+		
+//		farmer details, dealer details, crop details, booking details, booking details
+		
+		Farmer farmer = restTemplate.getForEntity(ROOT_URI4 + "/showFarmersById/"+booking.getFarmerId(), Farmer.class).getBody();
+		Dealer dealer = restTemplate.getForEntity(ROOT_URI5 + "/showDealersById/"+booking.getDealerId(), Dealer.class).getBody();
+		
+		int cropId = crop.getCropId();
+		double cropPrice = crop.getCropPrice();
+//		int bookingId = booking.getBookingId();
+		
+		Receipt receipt = new Receipt();
+		
+//		receipt.setReceiptId(receiptId);
+		receipt.setFarmerId(farmer.getFarmerId());
+		receipt.setFarmerPhoneNumber(farmer.getFarmerPhone());
+		receipt.setFarmerAccountNumber(farmer.getFarmerAccountNumber());
+		
+		receipt.setDealerId(dealer.getDealerId());
+		receipt.setDealerPhoneNumber(dealer.getDealerNumber());
+		receipt.setDealerAccountNumber(dealer.getDealerAccountNumber());
+		
+		receipt.setCropId(cropId);
+		receipt.setTotalAmount(crop.getCropPrice());
+		receipt.setBookingId(bookingId);
+		receiptId++;
+		
+		restTemplate.postForLocation(ROOT_URI3 +"/generateReceipts",receipt, Receipt.class);
+		return "Booking approved...!"+" Receipt ID: "+receipt.getReceiptId();
+	}
+
+	public String declineBooking(int bookingId) {
+
+		Booking booking = restTemplate.getForEntity(ROOT_URI + "/showBookingsById/" + bookingId, Booking.class)
+				.getBody();
+
+		if (booking == null) {
+			throw new BookingNotFoundException("Booking ID: " + bookingId + " not found in database...!");
+		}
+
+		Crop crop = restTemplate.getForEntity(ROOT_URI2 + "/showCropsByBookingId/" + bookingId, Crop.class).getBody();
+		if (crop == null) {
+			throw new CropNotFoundException("Crop with booking ID:" + bookingId + " not found in database...!");
+		}
+        crop.setDealerId(null);
+        crop.setBookingId(null);
+		crop.setCropStatus("UNSOLD");
+		restTemplate.put(ROOT_URI2 + "/updateCropsById/" + crop.getCropId(), crop);
+
+		booking.setPaymentStatus("Declined");
+		restTemplate.put(ROOT_URI + "/updateBookings/" + bookingId, booking);
+
+		return "Booking declined...!";
+	}
+
+	public Booking getBookings(int bookingId) {
+		Booking booking = restTemplate.getForEntity(ROOT_URI + "/showBookingsById/" + bookingId, Booking.class)
+				.getBody();
+
+		if (booking == null) {
+			throw new BookingNotFoundException("Booking ID: " + bookingId + " not found in database...!");
+		}
+		
+		return booking;
+	}
+}

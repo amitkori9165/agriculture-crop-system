@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="C:\Eclipse\Agriculture Crop System\ReceiptService"/>
+			<item value="C:\Eclipse\Agriculture Crop System\admin-service"/>
+			<item value="C:\Eclipse\Agriculture Crop System\ZOrderService"/>
+			<item value="C:\Eclipse\Agriculture Crop System\ZApiGateWayDemo1"/>
+			<item value="C:\Eclipse\Agriculture Crop System\ApiGateway"/>
+			<item value="C:\Eclipse\Agriculture Crop System\EurekaServerDemo1"/>
+			<item value="C:\Eclipse\Agriculture Crop System\EurekaServer"/>
+			<item value="C:\Eclipse\Agriculture Crop System\BookingService"/>
+			<item value="C:\Eclipse\Agriculture Crop System\CropService"/>
+			<item value="C:\Eclipse\Agriculture Crop System\DealerService"/>
+			<item value="C:\Eclipse\Agriculture Crop System\FarmerService"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

@@ -1,0 +1,9 @@
+package com.FarmerService.exceptions;
+
+public class FarmerAlreadyExistsException extends RuntimeException{
+	
+	public FarmerAlreadyExistsException(String message) {
+		super(message);
+	}
+
+}

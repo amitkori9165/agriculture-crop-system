@@ -1,0 +1,69 @@
+#spring.application.name=api-gateway
+#
+#server.port=8080
+#
+#spring.application.name=api-gateway
+#
+## Swagger UI Configuration
+#springdoc.swagger-ui.path=/swagger-ui.html
+#springdoc.api-docs.path=/v3/api-docs
+#
+#eureka.client.service-url.default-zone=http://localhost:8761/eureka/
+#
+## Spring Cloud Gateway routes
+#spring.cloud.gateway.routes[0].id=farmer-service
+#spring.cloud.gateway.routes[0].uri=http://localhost:8081
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+# 
+#spring.cloud.gateway.routes[1].id=dealer-service
+#spring.cloud.gateway.routes[1].uri=http://localhost:8082
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+#
+#spring.cloud.gateway.routes[2].id=crop-service
+#spring.cloud.gateway.routes[2].uri=http://localhost:8083
+#spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+# 
+#spring.cloud.gateway.routes[3].id=booking-service
+#spring.cloud.gateway.routes[3].uri=http://localhost:8084
+#spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+#
+#spring.cloud.gateway.routes[4].id=admin-service
+#spring.cloud.gateway.routes[4].uri=http://localhost:8085
+#spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+
+
+
+]# Application Name and Server Port
+spring.application.name=api-gateway
+server.port=8080
+
+# Swagger UI Configuration
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/v3/api-docs
+
+# Eureka Client Configuration
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+# Spring Cloud Gateway Routes
+spring.cloud.gateway.routes[0].id=farmer-service
+spring.cloud.gateway.routes[0].uri=lb://FARMER-SERVICE
+spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+ 
+spring.cloud.gateway.routes[1].id=dealer-service
+spring.cloud.gateway.routes[1].uri=lb://DEALER-SERVICE
+spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+
+spring.cloud.gateway.routes[2].id=crop-service
+spring.cloud.gateway.routes[2].uri=lb://CROP-SERVICE
+spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+ 
+spring.cloud.gateway.routes[3].id=booking-service
+spring.cloud.gateway.routes[3].uri=lb://BOOKING-SERVICE
+spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+
+spring.cloud.gateway.routes[4].id=admin-service
+spring.cloud.gateway.routes[4].uri=lb://ADMIN-SERVICE
+spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+
+#
+#

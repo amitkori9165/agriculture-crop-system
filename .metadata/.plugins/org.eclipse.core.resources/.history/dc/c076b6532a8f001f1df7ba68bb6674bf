@@ -1,0 +1,176 @@
+#spring.application.name=api-gateway
+#
+#server.port=8080
+#
+#spring.application.name=api-gateway
+#
+## Swagger UI Configuration
+#springdoc.swagger-ui.path=/swagger-ui.html
+#springdoc.api-docs.path=/v3/api-docs
+#
+#eureka.client.service-url.default-zone=http://localhost:8761/eureka/
+#
+## Spring Cloud Gateway routes
+#spring.cloud.gateway.routes[0].id=farmer-service
+#spring.cloud.gateway.routes[0].uri=http://localhost:8081
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+# 
+#spring.cloud.gateway.routes[1].id=dealer-service
+#spring.cloud.gateway.routes[1].uri=http://localhost:8082
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+#
+#spring.cloud.gateway.routes[2].id=crop-service
+#spring.cloud.gateway.routes[2].uri=http://localhost:8083
+#spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+# 
+#spring.cloud.gateway.routes[3].id=booking-service
+#spring.cloud.gateway.routes[3].uri=http://localhost:8084
+#spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+#
+#spring.cloud.gateway.routes[4].id=admin-service
+#spring.cloud.gateway.routes[4].uri=http://localhost:8085
+#spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+
+
+
+#]# Application Name and Server Port
+#spring.application.name=api-gateway
+#server.port=8080
+#
+## Swagger UI Configuration
+#springdoc.swagger-ui.path=/swagger-ui.html
+#springdoc.api-docs.path=/v3/api-docs
+#
+## Eureka Client Configuration
+#eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+#
+## Spring Cloud Gateway Routes
+#spring.cloud.gateway.routes[0].id=farmer-service
+#spring.cloud.gateway.routes[0].uri=lb://FARMER-SERVICE
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+# 
+#spring.cloud.gateway.routes[1].id=dealer-service
+#spring.cloud.gateway.routes[1].uri=lb://DEALER-SERVICE
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+#
+#spring.cloud.gateway.routes[2].id=crop-service
+#spring.cloud.gateway.routes[2].uri=lb://CROP-SERVICE
+#spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+# 
+#spring.cloud.gateway.routes[3].id=booking-service
+#spring.cloud.gateway.routes[3].uri=lb://BOOKING-SERVICE
+#spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+#
+#spring.cloud.gateway.routes[4].id=admin-service
+#spring.cloud.gateway.routes[4].uri=lb://ADMIN-SERVICE
+#spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+
+## Application Name and Server Port
+#spring.application.name=api-gateway
+#server.port=8080
+#
+## Swagger UI Configuration
+#springdoc.swagger-ui.path=/swagger-ui.html
+#springdoc.api-docs.path=/v3/api-docs
+#
+## Eureka Client Configuration
+#eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+#
+## Spring Cloud Gateway Routes
+#spring.cloud.gateway.routes[0].id=farmer-service
+#spring.cloud.gateway.routes[0].uri=lb://FARMER-SERVICE
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+#
+#spring.cloud.gateway.routes[1].id=dealer-service
+#spring.cloud.gateway.routes[1].uri=lb://DEALER-SERVICE
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+#
+#spring.cloud.gateway.routes[2].id=crop-service
+#spring.cloud.gateway.routes[2].uri=lb://CROP-SERVICE
+#spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+#
+#spring.cloud.gateway.routes[3].id=booking-service
+#spring.cloud.gateway.routes[3].uri=lb://BOOKING-SERVICE
+#spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+#
+#spring.cloud.gateway.routes[4].id=admin-service
+#spring.cloud.gateway.routes[4].uri=lb://ADMIN-SERVICE
+#spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+#
+## Routes for accessing the Swagger documentation of each service
+#spring.cloud.gateway.routes[5].id=farmer-service-docs
+#spring.cloud.gateway.routes[5].uri=lb://FARMER-SERVICE
+#spring.cloud.gateway.routes[5].predicates[0]=Path=/farmer-service/v3/api-docs
+#
+#spring.cloud.gateway.routes[6].id=dealer-service-docs
+#spring.cloud.gateway.routes[6].uri=lb://DEALER-SERVICE
+#spring.cloud.gateway.routes[6].predicates[0]=Path=/dealer-service/v3/api-docs
+#
+#spring.cloud.gateway.routes[7].id=crop-service-docs
+#spring.cloud.gateway.routes[7].uri=lb://CROP-SERVICE
+#spring.cloud.gateway.routes[7].predicates[0]=Path=/crop-service/v3/api-docs
+#
+#spring.cloud.gateway.routes[8].id=booking-service-docs
+#spring.cloud.gateway.routes[8].uri=lb://BOOKING-SERVICE
+#spring.cloud.gateway.routes[8].predicates[0]=Path=/booking-service/v3/api-docs
+#
+#spring.cloud.gateway.routes[9].id=admin-service-docs
+#spring.cloud.gateway.routes[9].uri=lb://ADMIN-SERVICE
+#spring.cloud.gateway.routes[9].predicates[0]=Path=/admin-service/v3/api-docs
+
+
+
+# Existing configuration...
+spring.application.name=api-gateway
+server.port=8080
+
+# Swagger UI Configuration
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/v3/api-docs
+
+# Eureka Client Configuration
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+# Spring Cloud Gateway Routes
+spring.cloud.gateway.routes[0].id=farmer-service
+spring.cloud.gateway.routes[0].uri=http://localhost:8081
+spring.cloud.gateway.routes[0].predicates[0]=Path=/farmers/**
+
+spring.cloud.gateway.routes[1].id=dealer-service
+spring.cloud.gateway.routes[1].uri=http://localhost:8082
+spring.cloud.gateway.routes[1].predicates[0]=Path=/dealers/**
+
+spring.cloud.gateway.routes[2].id=crop-service
+spring.cloud.gateway.routes[2].uri=http://localhost:8083
+spring.cloud.gateway.routes[2].predicates[0]=Path=/crops/**
+
+spring.cloud.gateway.routes[3].id=booking-service
+spring.cloud.gateway.routes[3].uri=http://localhost:8084
+spring.cloud.gateway.routes[3].predicates[0]=Path=/bookings/**
+
+spring.cloud.gateway.routes[4].id=admin-service
+spring.cloud.gateway.routes[4].uri=http://localhost:8085
+spring.cloud.gateway.routes[4].predicates[0]=Path=/admin/**
+
+# Swagger routes for each service
+spring.cloud.gateway.routes[5].id=farmer-service-docs
+spring.cloud.gateway.routes[5].uri=http://localhost:8081
+spring.cloud.gateway.routes[5].predicates[0]=Path=/farmer-service/v3/api-docs
+
+spring.cloud.gateway.routes[6].id=dealer-service-docs
+spring.cloud.gateway.routes[6].uri=http://localhost:8082
+spring.cloud.gateway.routes[6].predicates[0]=Path=/dealer-service/v3/api-docs
+
+spring.cloud.gateway.routes[7].id=crop-service-docs
+spring.cloud.gateway.routes[7].uri=http://localhost:8083
+spring.cloud.gateway.routes[7].predicates[0]=Path=/crop-service/v3/api-docs
+
+spring.cloud.gateway.routes[8].id=booking-service-docs
+spring.cloud.gateway.routes[8].uri=http://localhost:8084
+spring.cloud.gateway.routes[8].predicates[0]=Path=/booking-service/v3/api-docs
+
+spring.cloud.gateway.routes[9].id=admin-service-docs
+spring.cloud.gateway.routes[9].uri=lb://ADMIN-SERVICE
+spring.cloud.gateway.routes[9].predicates[0]=Path=/admin-service/v3/api-docs
+
+

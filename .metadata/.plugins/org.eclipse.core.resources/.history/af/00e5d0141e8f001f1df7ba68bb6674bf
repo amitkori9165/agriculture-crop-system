@@ -1,0 +1,24 @@
+package com.admin.services;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import com.admin.model.Farmer;
+import com.admin.repo.AdminRepo;
+
+public class AdminFarmerService {
+	
+	RestTemplate rest;
+	
+	final String ROOT_URL1 = "http://localhost:8081/farmers";
+	
+	public List<Farmer> showAllFarmers(){
+		ResponseEntity<Farmer[]> response = rest.getForEntity(ROOT_URL1, Farmer[].class);
+		System.out.println(response);
+		return Arrays.asList(response.getBody()); 
+	}
+
+}

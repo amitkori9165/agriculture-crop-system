@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ApiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: FarmerService
+          uri: http://localhost:8081
+          predicates:
+            - Path=/farmers/**
+        - id: DealerService
+          uri: http://localhost:8082
+          predicates:
+            - Path=/dealer/**
+        - id: CropService
+          uri: http://localhost:8083
+          predicates:
+            - Path=/crop/**
+        - id: BookingService
+          uri: http://localhost:8084   
+          predicates:
+            - Path=/booking/**
